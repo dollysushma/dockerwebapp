@@ -2,14 +2,25 @@ version: "3.9"
 
 services:
   devopsdb:
-    image: sushmatt/manual:db
+    image: shaikmustafa/flm-oct:db
     ports:
       - "3306:3306"
+    deploy:
+      replicas: 1
+    networks:
+      - mynetwork
 
   application:
-    image: sushmatt/manual:app
+    image: shaikmustafa/flm-oct:javaapp
     ports:
-      - "6699:8080"
+      - "1111:8080"
+    deploy:
+      replicas: 3
     depends_on:
       - devopsdb
+    networks:
+      - mynetwork
 
+networks:
+  mynetwork:
+    driver: overlay
